@@ -3,6 +3,53 @@
 --> used diifutil so that updation of recylerview dont takes time , 
 
 
+
+
+
+////////////////////////////////////// NEW UPDATE ~~~!!!!!!!!!!!!!!!!!///////////////////
+
+import android.util.Log
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.RecyclerView
+import com.krrishshx.diwarikagaj.ImgDiffUtill
+import com.krrishshx.diwarikagaj.databinding.TestItemBinding
+
+class rv_adapter_testing :RecyclerView.Adapter<rv_adapter_testing.MyViewHolder>() {
+
+    private var oldList = emptyList<person>()
+
+    class MyViewHolder(val binding: TestItemBinding ):RecyclerView.ViewHolder(binding.root)
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
+        Log.d("debug:","test 3 create")
+        return MyViewHolder(TestItemBinding.inflate(LayoutInflater.from(parent.context),parent,false))
+    }
+
+    override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
+        Log.d("debug:","test 3 ${oldList.toString()}")
+        holder.binding.tvTest.text = oldList.get(position).name
+    }
+
+    override fun getItemCount(): Int {
+        return oldList.size
+    }
+
+    fun setData(newList:List<person>){
+        val diffUtil = ImgDiffUtill(oldList,newList)
+        val diffResults = DiffUtil.calculateDiff(diffUtil)
+        oldList = newList
+        diffResults.dispatchUpdatesTo(this)
+    }
+}
+
+
+
+
+
+
+
 class rv_adapter_genres  (private val mcontext: Context, private  val listener : OnItemClickListener) : RecyclerView.Adapter<rv_adapter_genres.ViewHolder>() {
     private var dataSet= ArrayList<String>()
 
